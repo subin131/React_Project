@@ -1,34 +1,26 @@
-import React, { Component } from "react";
-import RegualrComp from "./RegualrComp";
-import PureComp from "./PureComp";
-import MemoComp from "./MemoComp";
+import React, { useState, useCallback } from "react";
+import Counte from "./Counte";
+import Button from "./Button";
+import Title from "./Title";
+function ParentComp() {
+  const [age, setAge] = useState(25);
+  const [salary, setSalary] = useState(50000);
 
-class ParentComp extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: "Satyal hero",
-    };
-  }
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        name: "Satyal hero",
-      });
-    }, 2000);
-  }
-  render() {
-    console.log("Parent Component...............");
-    return (
-      <div>
-        Parent Component
-        {/* <RegualrComp name={this.state.name} />
-        <PureComp name={this.state.name} /> */}
-        <MemoComp name={this.state.name} />
-      </div>
-    );
-  }
+  const incrementAge = useCallback(() => {
+    setAge(age + 1);
+  }, [age]);
+  const incrementSalary = useCallback(() => {
+    setSalary(salary + 1000);
+  }, [salary]);
+  return (
+    <div>
+      <Title />
+      <Counte text="Age" count={age} />
+      <Button handleClick={incrementAge}>Increment Age</Button>
+      <Counte text="Salary" count={salary} />
+      <Button handleClick={incrementSalary}>Increment Salary</Button>
+    </div>
+  );
 }
 
 export default ParentComp;
